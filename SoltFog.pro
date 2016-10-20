@@ -13,19 +13,25 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    mdvvmodel.cpp \
-    mva8model.cpp \
+    mainwindow.cpp \
     dataminer.cpp \
     digitkeyboard.cpp \
-    plotter.cpp
+    plotter.cpp \
+    devicecontroller.cpp \
+    logiccontroller.cpp \
+    IODevices/mdvvmodel.cpp \
+    IODevices/mva8model.cpp \
+    IODevices/lumelp18.cpp
 
 HEADERS  += mainwindow.h \
-    mdvvmodel.h \
-    mva8model.h \
     dataminer.h \
     digitkeyboard.h \
-    plotter.h
+    plotter.h \
+    devicecontroller.h \
+    logiccontroller.h \
+    IODevices/mdvvmodel.h \
+    IODevices/mva8model.h \
+    IODevices/lumelp18.h
 
 FORMS    += mainwindow.ui \
     digitkeyboard.ui \

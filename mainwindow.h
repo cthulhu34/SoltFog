@@ -7,7 +7,7 @@
 //#include "mva8model.h"
 #include "digitkeyboard.h"
 #include "plotter.h"
-#include "dataminer.h"
+//#include "dataminer.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +24,7 @@ public:
 private slots:
     void errorsDispatch(int address, QString msg);
 
-    void eventsDispatch(DataMiner::Events e);
+    //void eventsDispatch(DataMiner::Events e);
 
     void addDataToPlot();
 
@@ -42,7 +42,7 @@ private:
     Ui::MainWindow *ui;
 
     QTimer *graphicTimer;
-    DataMiner *dataMiner;
+   // DataMiner *dataMiner;
 
     void setTemperatureTarget(float t);
     void setWorkTime(int minutes);

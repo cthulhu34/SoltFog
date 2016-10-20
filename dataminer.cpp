@@ -42,17 +42,17 @@ int DataMiner::initDevices()
     if (!modbusDevice)
         return -1;
 
-    mva1 = new MVA8Model(modbusDevice, 1, this);
-    mva1->setEnabledInput(0, true);
-   // mva1->setEnabledInput(1, true);
-   // mva1->setEnabledInput(2, true);
-    mva1->start(400);
+//    mva1 = new MVA8Model(modbusDevice, 1, this);
+//    mva1->setEnabledInput(0, true);
+//   // mva1->setEnabledInput(1, true);
+//   // mva1->setEnabledInput(2, true);
+//    mva1->start(400);
 
-    mdvv1 = new MDVVModel(modbusDevice, 16, this);
-    connect(mdvv1, &MDVVModel::updateInputs, this, &DataMiner::parseInputs);
-    connect(mdvv1, &MDVVModel::updateInput, this, &DataMiner::translateEvent);
-    connect(mdvv1, &MDVVModel::errorDetected, this, &DataMiner::translateError);
-    mdvv1->start(1000);
+//    mdvv1 = new MDVVModel(modbusDevice, 16, this);
+//    connect(mdvv1, &MDVVModel::updateInputs, this, &DataMiner::parseInputs);
+//    connect(mdvv1, &MDVVModel::updateInput, this, &DataMiner::translateEvent);
+//    connect(mdvv1, &MDVVModel::errorDetected, this, &DataMiner::translateError);
+//    mdvv1->start(1000);
     
     //mdvv2 = new MDVVModel(modbusDevice, 32, this);
     //connect(mdvv2, &MDVVModel::updateInputs, this, &DataMiner::parseInputs);
@@ -65,7 +65,7 @@ QVariant DataMiner::getParameter(Parameters p)
     switch (p) {
     case Parameters::temperatureMain:
     {
-        result = mva1->getInput(0);//new QVariant(mva1->getInput(0));
+        //result = mva1->getInput(0);//new QVariant(mva1->getInput(0));
     }
     default:
         break;
@@ -75,23 +75,23 @@ QVariant DataMiner::getParameter(Parameters p)
 
 void DataMiner::parseInputs(int address)
 {
-    switch (address) {
-    case 1:
+//    switch (address) {
+//    case 1:
 
-        break;
+//        break;
         
-    case 16:
-    {
-        if(mdvv1->getInput(0))
+//    case 16:
+//    {
+//        if(mdvv1->getInput(0))
 
-        break;
-    }
-    case 32:
-        break;
+//        break;
+//    }
+//    case 32:
+//        break;
         
-    default:
-        break;
-    }
+//    default:
+//        break;
+//    }
 }
 
 void DataMiner::translateEvent(int address, int input)
@@ -101,27 +101,27 @@ void DataMiner::translateEvent(int address, int input)
 
         break;
 
-    case 16:
-    {
-        switch(input){
-        case 0:
-        {
-            if(mdvv1->getInput(input))
-            {
-                emit eventOccurred(Events::criticalCircuitReturnToNormal);
-            }
-            else
-            {
-                emit eventOccurred(Events::criticalCircuitDamaged);
-            }
-            break;
-        }
-        case 1:
-            break;
-        }
+//    case 16:
+//    {
+//        switch(input){
+//        case 0:
+//        {
+//            if(mdvv1->getInput(input))
+//            {
+//                emit eventOccurred(Events::criticalCircuitReturnToNormal);
+//            }
+//            else
+//            {
+//                emit eventOccurred(Events::criticalCircuitDamaged);
+//            }
+//            break;
+//        }
+//        case 1:
+//            break;
+//        }
 
-        break;
-    }
+//        break;
+//    }
     case 32:
         break;
 

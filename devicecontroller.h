@@ -1,20 +1,15 @@
-#ifndef DATAMINER_H
-#define DATAMINER_H
+#ifndef DEVICECONTROLLER_H
+#define DEVICECONTROLLER_H
 
 #include <QObject>
 #include <QModbusRtuSerialMaster>
 #include <QSerialPort>
 #include <QSerialPortInfo>
-#include <QVector>
-#include <QTimer>
-#include <QVariant>
-#include <QDateTime>
+#include "IODevices/lumelp18.h"
 
-
-class DataMiner : public QObject
+class DeviceController : public QObject
 {
     Q_OBJECT
-public:
 
     enum Parameters{
         temperatureMain
@@ -25,13 +20,16 @@ public:
         criticalCircuitReturnToNormal
     };
 
-    explicit DataMiner(QObject *parent = 0);
+//Описание устройств ввода-вывода
 
-    QVariant getParameter(Parameters p);
+//Описание датчиков и устройств дикретного ввода
+    LumelP18 *THsensor = Q_NULLPTR; //Датчик температуры и влажности
+
+//Описание исполнительных устройств
 
 
-private:
-    struct Settings {
+//Настройки, объекты и функции для связи по RS485
+    struct RS485Settings {
         QString port = "ttyUSB0";
         int parity = QSerialPort::NoParity;
         int baud = QSerialPort::Baud115200;
@@ -41,26 +39,21 @@ private:
         int numberOfRetries = 3;
     };
 
-    QModbusRtuSerialMaster* modbusDevice;
-    Settings settings;
-
-
-    //float currentTemperature, currentHumidity;
+    QModbusRtuSerialMaster* modbusMaster;
+    RS485Settings rs485settings;
 
     int connectToRS485();
+public:
+    explicit DeviceController(QObject *parent = 0);
+
     int initDevices();
+
 
 signals:
     void errorDetected(int address, QString msg);
     void eventOccurred(Events e);
 
-
-private slots:
-    void parseInputs(int address);
-    void translateEvent(int address, int input);
-    void translateError(int address, QString msg);
-
 public slots:
 };
 
-#endif // DATAMINER_H
+#endif // DEVICECONTROLLER_H

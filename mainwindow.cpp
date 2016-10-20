@@ -53,18 +53,18 @@ void MainWindow::on_btnPauseTime_clicked()
 
 void MainWindow::on_btnStart_clicked()
 {
-    graphicTimer = new QTimer;
-    graphicTimer->setInterval(1000);
-    connect(graphicTimer, &QTimer::timeout, this, &MainWindow::addDataToPlot);
+//    graphicTimer = new QTimer;
+//    graphicTimer->setInterval(1000);
+//    connect(graphicTimer, &QTimer::timeout, this, &MainWindow::addDataToPlot);
 
 
-    dataMiner = new DataMiner(this);
-    connect(dataMiner, &DataMiner::eventOccurred, this, &MainWindow::eventsDispatch);
+//    dataMiner = new DataMiner(this);
+//    connect(dataMiner, &DataMiner::eventOccurred, this, &MainWindow::eventsDispatch);
 
-    graphicTimer->start();
+//    graphicTimer->start();
 
-    ui->chartView->startNewPlot();
-    ui->chartView->setTimeStep(1000);
+//    ui->chartView->startNewPlot();
+//    ui->chartView->setTimeStep(1000);
 }
 
 void MainWindow::on_btnStop_clicked()
@@ -74,11 +74,11 @@ void MainWindow::on_btnStop_clicked()
 
 void MainWindow::addDataToPlot()
 {
-    float t = dataMiner->getParameter(DataMiner::temperatureMain).toFloat();
+    //float t = dataMiner->getParameter(DataMiner::temperatureMain).toFloat();
 
-    ui->chartView->addDataT(t);
+    //ui->chartView->addDataT(t);
 
-    ui->lblTemperature->setText(QString::number(t, 'f', 2) + QChar(176) + " C");
+    //ui->lblTemperature->setText(QString::number(t, 'f', 2) + QChar(176) + " C");
 
 }
 
@@ -97,19 +97,19 @@ void MainWindow::setPauseTime(int minutes)
     ui->btnPauseTime->setText(QString::number(minutes));
 }
 
-void MainWindow::eventsDispatch(DataMiner::Events e)
-{
-    switch (e){
-    case DataMiner::criticalCircuitDamaged:
-        ui->statusBar->showMessage("Critical circuit damaged");
-        break;
-    case DataMiner::criticalCircuitReturnToNormal:
-        ui->statusBar->showMessage("Critical circuit returned to normal");
-        break;
-    default:
-        break;
-    }
-}
+//void MainWindow::eventsDispatch(DataMiner::Events e)
+//{
+//    switch (e){
+//    case DataMiner::criticalCircuitDamaged:
+//        ui->statusBar->showMessage("Critical circuit damaged");
+//        break;
+//    case DataMiner::criticalCircuitReturnToNormal:
+//        ui->statusBar->showMessage("Critical circuit returned to normal");
+//        break;
+//    default:
+//        break;
+//    }
+//}
 
 void MainWindow::errorsDispatch(int address, QString msg)
 {
