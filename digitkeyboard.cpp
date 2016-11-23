@@ -49,10 +49,10 @@ void DigitKeyboard::setRange(float min, float max)
     this->minVal = min;
     this->maxVal = max;
 
-    this->ui->lblMinValue->setText(QString::number(min, 'f', 2));
-    this->ui->lblMaxValue->setText(QString::number(max, 'f', 2));
+    this->ui->lblMinValue->setText(QString::number(min, 'f', 4));
+    this->ui->lblMaxValue->setText(QString::number(max, 'f', 4));
 
-    QDoubleValidator *validator = new QDoubleValidator(minVal, maxVal, 2, this);
+    QDoubleValidator *validator = new QDoubleValidator(minVal, maxVal, 4, this);
     validator->setNotation(QDoubleValidator::StandardNotation);
     ui->lineEdit->setValidator(validator);
 }

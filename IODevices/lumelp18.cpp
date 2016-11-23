@@ -1,4 +1,5 @@
 #include "lumelp18.h"
+#include <QTextStream>
 
 LumelP18::LumelP18(QModbusRtuSerialMaster *master, int addr, QObject *parent) : QObject(parent)
 {
@@ -25,6 +26,8 @@ void LumelP18::sendReadResponse()
             delete reply; // broadcast replies return immediately
     } else {
         emit errorDetected(tr("Read error: ") + modbusMaster->errorString());
+        QTextStream err(stderr);
+        err << tr("Read error: ") + modbusMaster->errorString();
     }
 }
 
@@ -45,16 +48,26 @@ void LumelP18::readAnalogInputs()
             inputs.replace(i, *((float*)t));
         }
 
+       // QTextStream err(stderr);
+       // err << tr("\ncur Temp =: ") + QString::number(inputs.at(0), 'f', 5);
         emit updateInputs();
 
     } else if (reply->error() == QModbusDevice::ProtocolError) {
         emit errorDetected(tr("Read response error: %1 (Modbus exception: 0x%2)").
                                     arg(reply->errorString()).
                                     arg(reply->rawResult().exceptionCode(), -1, address));
+        QTextStream err(stderr);
+        err << tr("Read response error: %1 (Modbus exception: 0x%2)").
+               arg(reply->errorString()).
+               arg(reply->rawResult().exceptionCode(), -1, address);
     } else {
         emit errorDetected(tr("Read response error: %1 (code: 0x%2)").
                                     arg(reply->errorString()).
                                     arg(reply->error(), -1, address));
+        QTextStream err(stderr);
+        err << tr("Read response error: %1 (Modbus exception: 0x%2)").
+               arg(reply->errorString()).
+               arg(reply->error(), -1, address);
     }
 
     reply->deleteLater();

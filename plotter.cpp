@@ -76,17 +76,19 @@ void plotter::initPlot()
     xAxis->setVisible(false);
 
     yAxis = new QValueAxis;
-//    if(!autoY)
-//        yAxis->setRange(yMin, yMax);
-//    else
-//    {
+
     yAxis->setTickCount(11);
-        yAxis->setRange(0, 30);
-        yMaxValue=29;
-        yMinValue=1;
-        //yMin = 1;
-        //yMax = 30;
-    //}
+    yAxis->setRange(0, 30);
+    yMaxValue=29;
+    yMinValue=1;
+
+
+
+        axisY3 = new QCategoryAxis;
+        axisY3->setLinePenColor(QColor(0, 0, 200));
+        axisY3->setGridLinePen(QPen(Qt::DashLine));
+        view->chart()->addAxis(axisY3, Qt::AlignRight);
+        //diagramT->attachAxis(axisY3);
 
     channelT.setWidthF(3);
     channelT.setBrush(Qt::red);
@@ -99,22 +101,28 @@ void plotter::initPlot()
     diagramT->setName(tr("Температура"));
     diagramT->setPen(channelT);
     diagramT->setVisible(showT);
-    diagramT->setUseOpenGL(true);               // Включить поддержку OpenGL
+//    diagramT->setUseOpenGL(true);               // Включить поддержку OpenGL
+//
 
     diagramH = new QLineSeries;
     diagramH->setName(tr("Влажность"));
     diagramH->setPen(channelH);
     diagramH->setVisible(showH);
-    diagramH->setUseOpenGL(true);               // Включить поддержку OpenGL
+//    diagramH->setUseOpenGL(true);               // Включить поддержку OpenGL
+
 
     view->chart()->addSeries(diagramT);         // Добавить на график
     view->chart()->setAxisX(xAxis, diagramT);   // Назначить ось xAxis, осью X для diagramA
     view->chart()->setAxisY(yAxis, diagramT);
+    diagramT->attachAxis(axisY3);
+
     view->chart()->addSeries(diagramH);         // Добавить на график
     view->chart()->setAxisX(xAxis, diagramH);   // Назначить ось xAxis, осью X для diagramA
     view->chart()->addAxis(xTimeAxis, Qt::AlignBottom);
     view->chart()->setAxisY(yAxis, diagramH);   // Назначить ось yAxis, осью Y для diagramA
 
+
+    view->setRenderHint(QPainter::Antialiasing);
 
     connect(this, &plotter::onlineIntervalEnded, this, &plotter::updateOnlineInterval);
 }
@@ -518,4 +526,14 @@ void plotter::mousePanTriggered(QMouseEvent *event)
 
     mousePrevPos = mouseCurPos;
     //update();
+}
+
+void plotter::setTSetpoint(float setpoint)
+{
+    //TSetpoint = setpoint;
+    QStringList labels = axisY3->categoriesLabels();
+    foreach (QString label, labels) {
+        axisY3->remove(label);
+    }
+    axisY3->append(QString::number(setpoint), setpoint);
 }

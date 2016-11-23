@@ -49,6 +49,8 @@ private:
     QDateTime xZeroValue; //begin point for time axis
     QDateTimeAxis *xTimeAxis; //visible time axis
 
+    QCategoryAxis *axisY3;
+
     QPen channelT;   // Pen for temperatue
     QPen channelH; //Pen for humidity
 
@@ -67,6 +69,8 @@ private:
     qreal scaleFactor, currentStepScaleFactor;
 
     QPointF mousePrevPos, mouseCurPos;
+
+    float TSetpoint, HSetpoint;
 
     //void pausePlot();
     //void continuePlot();
@@ -94,6 +98,8 @@ public slots:
     void screenForward();
 
     void startNewPlot();
+
+    void setTSetpoint(float setpoint);
 
 signals:
     void xRangeChanged();

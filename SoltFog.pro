@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts serialbus serialport
 TARGET = SoltFog
 TEMPLATE = app
 
+target.path = /home/pi/
+INSTALLS = target
+
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -21,7 +24,8 @@ SOURCES += main.cpp\
     logiccontroller.cpp \
     IODevices/mdvvmodel.cpp \
     IODevices/mva8model.cpp \
-    IODevices/lumelp18.cpp
+    IODevices/lumelp18.cpp \
+    plotoptions.cpp
 
 HEADERS  += mainwindow.h \
     dataminer.h \
@@ -31,8 +35,18 @@ HEADERS  += mainwindow.h \
     logiccontroller.h \
     IODevices/mdvvmodel.h \
     IODevices/mva8model.h \
-    IODevices/lumelp18.h
+    IODevices/lumelp18.h \
+    wiringPi/wiringPi.h \
+    plotoptions.h
 
 FORMS    += mainwindow.ui \
     digitkeyboard.ui \
-    plotter.ui
+    plotter.ui \
+    plotoptions.ui
+
+INCLUDEPATH += wiringPi
+
+QMAKE_LFLAGS += -lwiringPi -lpthread
+
+RESOURCES += \
+    res.qrc
